@@ -390,24 +390,26 @@ Memory analysis complete!
 
 | Memory Section | Variable/Function | Address (ที่แสดงออกมา) | Memory Type |
 |----------------|-------------------|----------------------|-------------|
-| Stack | stack_var | 0x_______ | SRAM |
-| Global SRAM | sram_buffer | 0x_______ | SRAM |
-| Flash | flash_string | 0x_______ | Flash |
-| Heap | heap_ptr | 0x_______ | SRAM |
+| Stack | stack_var | 0x3ffb4550 | SRAM |
+| Global SRAM | sram_buffer | 0x3ffb16ac | SRAM |
+| Flash | flash_string | 0x3f407b64 | Flash |
+| Heap | heap_ptr | 0x3ffb5264| SRAM |
 
 **Table 2.2: Memory Usage Summary**
 
 | Memory Type | Free Size (bytes) | Total Size (bytes) |
 |-------------|-------------------|--------------------|
-| Internal SRAM | _________ | 520,192 |
-| Flash Memory | _________ | varies |
-| DMA Memory | _________ | varies |
+| Internal SRAM | 380096 | 520,192 |
+| Flash Memory | 0 | varies |
+| DMA Memory |  303096 | varies |
 
 ### คำถามวิเคราะห์ (ง่าย)
 
 1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
-2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
-3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+   SRAM เป็นหน่วยความจำหลักที่ใช้ในขณะระบบกำลังทำงาน หรือที่เราเรียกกันว่า หน่วยความจำชั่วคราว ซึ่งจะถูกใช้เก็บข้อมูลที่เปลี่ยนแปลงตลอดเวลา เช่น ตัวแปรในโปรแกรมที่ต้องใช้งาน
+   Flash Memory เป็นหน่วยความจำแบบถาวรที่อยู่ในชิปไมโครคอนโทรลเลอร์ เช่น ESP32 ใช้สำหรับเก็บข้อมูลที่เราต้องการ ให้คงอยู่แม้ปิดเครื่อง เช่น ตัวโปรแกรมหรือ firmware 
+3. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+4. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
 
 ---
 
@@ -596,20 +598,20 @@ void app_main() {
 
 | Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
 |-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Sequential | Internal SRAM | 5067 μs | 1.00x |
+| Random | Internal SRAM | 7344 μs | 1.37x |
+| Sequential | External Memory | 5067 μs | 1.45x |
+| Random | External Memory | 7344 μs | 0.96x |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
 |-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| 1 | 5383 μs |  0.51x |
+| 2 | 2729 μs | 0.28x |
+| 4 | 1486 μs | 0.17x |
+| 8 | 916 μs | 0.06x |
+| 16 | 331 μs | 0x |
 
 ### คำถามวิเคราะห์
 
@@ -842,19 +844,19 @@ void app_main() {
 
 | Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
 |--------|-------------------|-------------------|
-| Total Iterations | _______ | _______ |
-| Average Time per Iteration (μs) | _______ | _______ |
-| Total Execution Time (ms) | _______ | _______ |
-| Task Completion Rate | _______ | _______ |
+| Total Iterations | 100 | 150 |
+| Average Time per Iteration (μs) | 105 μs | 10029 μs |
+| Total Execution Time (ms) | 10.5 ms | 1504.35 ms |
+| Task Completion Rate | 9,523 iter/sec | 99.7 iter/sec |
 
 **Table 4.2: Inter-Core Communication**
 
 | Metric | Value |
 |--------|-------|
-| Messages Sent | _______ |
-| Messages Received | _______ |
-| Average Latency (μs) | _______ |
-| Queue Overflow Count | _______ |
+| Messages Sent | 10.5 ms |
+| Messages Received | 1504.5 ms |
+| Average Latency (μs) | 9,523 iter/sec |
+| Queue Overflow Count | 99.7 iter/sec |
 
 ### คำถามวิเคราะห์
 
