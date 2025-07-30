@@ -934,7 +934,7 @@ void app_main() {
 2. วิเคราะห์ power consumption patterns
 3. เปรียบเทียบกับ microcontrollers อื่น
 
----
+----
 
 **หมายเหตุ**: 
 - การทดลองนี้ต่อเนื่องจากสัปดาห์ที่ 4 โดยเน้นการวิเคราะห์ architecture 
