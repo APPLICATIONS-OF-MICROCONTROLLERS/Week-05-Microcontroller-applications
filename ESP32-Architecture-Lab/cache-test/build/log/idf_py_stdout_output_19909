@@ -1,0 +1,92 @@
+Command: /opt/esp/python_env/idf6.0_py3.12_env/bin/python /opt/esp/idf/tools/idf_monitor.py -p socket://localhost:5555 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /project/cache-test/build/cache_test.elf /project/cache-test/build/bootloader/bootloader.elf -m '/opt/esp/python_env/idf6.0_py3.12_env/bin/python' '/opt/esp/idf/tools/idf.py'
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x12 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15928
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (749) boot: ESP-IDF v6.0-dev-1002-gbfe5caf58f 2nd stage bootloader[0m
+[0;32mI (750) boot: compile time Jul 30 2025 08:59:42[0m
+[0;32mI (750) boot: Multicore bootloader[0m
+[0;32mI (846) boot: chip revision: v3.0[0m
+[0;32mI (848) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (848) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (848) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (863) boot: Enabling RNG early entropy source...[0m
+[0;32mI (878) boot: Partition Table:[0m
+[0;32mI (879) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (879) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (879) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (879) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (889) boot: End of partition table[0m
+[0;32mI (973) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=09764h ( 38756) map[0m
+[0;32mI (1015) esp_image: segment 1: paddr=0001978c vaddr=3ff80000 size=00024h (    36) load[0m
+[0;32mI (1053) esp_image: segment 2: paddr=000197b8 vaddr=3ffb0000 size=025e0h (  9696) load[0m
+[0;32mI (1089) esp_image: segment 3: paddr=0001bda0 vaddr=40080000 size=04278h ( 17016) load[0m
+[0;32mI (1131) esp_image: segment 4: paddr=00020020 vaddr=400d0020 size=0f308h ( 62216) map[0m
+[0;32mI (1175) esp_image: segment 5: paddr=0002f330 vaddr=40084278 size=08d40h ( 36160) load[0m
+[0;32mI (1316) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (1316) boot: Disabling RNG early entropy source...[0m
+[0;32mI (1344) cpu_start: Multicore app[0m
+[0;32mI (2352) cpu_start: Pro cpu start user code[0m
+[0;32mI (2353) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (2353) app_init: Application information:[0m
+[0;32mI (2353) app_init: Project name:     cache_test[0m
+[0;32mI (2353) app_init: App version:      1[0m
+[0;32mI (2354) app_init: Compile time:     Jul 30 2025 08:59:38[0m
+[0;32mI (2354) app_init: ELF file SHA256:  5263b5a2f...[0m
+[0;32mI (2354) app_init: ESP-IDF:          v6.0-dev-1002-gbfe5caf58f[0m
+[0;32mI (2354) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (2354) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (2354) efuse_init: Chip rev:         v3.0[0m
+[0;32mI (2355) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (2356) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (2356) heap_init: At 3FFB6EA8 len 00029158 (164 KiB): DRAM[0m
+[0;32mI (2356) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (2356) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (2357) heap_init: At 4008CFB8 len 00013048 (76 KiB): IRAM[0m
+[0;32mI (2402) spi_flash: detected chip: winbond[0m
+[0;32mI (2409) spi_flash: flash io: dio[0m
+[0;32mI (2422) main_task: Started on CPU0[0m
+[0;32mI (2432) main_task: Calling app_main()[0m
+ESP32 Cache Performance Analysis
+================================
+Array size: 4096 elements (16 KB)
+Iterations per test: 100
+Test runs: 5
+
+Initializing test arrays...
+PSRAM not available, using internal memory
+
+=== Test 1: Sequential vs Random Access (Internal SRAM) ===
+SRAM Sequential Access: 5275 μs (sum=3609780224)
+SRAM Random Access: 7237 μs (sum=3609780224)
+SRAM Performance Ratio (Random/Sequential): 1.37x
+
+=== Test 2: External Memory Access ===
+External Sequential Access: 5067 μs (sum=3609780224)
+External Random Access: 7344 μs (sum=3609780224)
+External Memory Performance Ratio: 1.45x
+
+Memory Type Comparison (Sequential Access):
+External/Internal Speed Ratio: 0.96x
+
+=== Test 3: Stride Access Patterns ===
+Stride 1 (stride 1): 5383 μs (sum=3609780224)
+Stride 2 (stride 2): 2729 μs (sum=1801306112)
+Stride 4 (stride 4): 1486 μs (sum=3044552704)
+Stride 8 (stride 8): 916 μs (sum=3666176000)
+Stride 16 (stride 16): 331 μs (sum=1829504000)
+
+Stride Analysis:
+Stride 2/1 ratio: 0.51x
+Stride 4/1 ratio: 0.28x
+Stride 8/1 ratio: 0.17x
+Stride 16/1 ratio: 0.06x
+
+Cache performance analysis complete!
+[0;32mI (2472) main_task: Returned from app_main()[0m
