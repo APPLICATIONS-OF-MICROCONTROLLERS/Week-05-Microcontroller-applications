@@ -366,20 +366,20 @@ Flash string: Hello from Flash Memory!
 SRAM buffer: SRAM Test Data
 
 === ESP32 Memory Layout Analysis ===
-Stack variable address: 0x3ffbxxxx
-SRAM buffer address:    0x3ffcxxxx  
-Flash string address:   0x400xxxxx
-Heap allocation:        0x3ffcxxxx
+Stack variable address: 0x3ffb4550
+SRAM buffer address:    0x3ffb16ac  
+Flash string address:   0x3f407b64
+Heap allocation:        0x3ffb5264
 
 === Heap Information ===
-Free heap size:         xxxxxx bytes
-Min free heap size:     xxxxxx bytes
-Largest free block:     xxxxxx bytes
+Free heap size:         303096 bytes
+Min free heap size:     303096 bytes
+Largest free block:     172032 bytes
 
 === Memory Usage by Type ===
-Internal SRAM:          xxxxxx bytes
+Internal SRAM:          380096 bytes
 SPI RAM (if available): 0 bytes
-DMA capable memory:     xxxxxx bytes
+DMA capable memory:     303096 bytes
 
 Memory analysis complete!
 ```
