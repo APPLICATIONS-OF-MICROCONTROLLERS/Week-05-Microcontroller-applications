@@ -1,0 +1,51 @@
+1.Docker Commands: คำสั่ง docker-compose up -d และ docker-compose exec esp32-dev bash ทำอะไร?
+ตอบ คำสั่ง docker-compose up -d ใช้สำหรับเริ่มต้น container ที่เตรียมไว้สำหรับพัฒนา ESP32 โดยรันแบบ background (ไม่แสดงผลหน้าจอ)
+คำสั่ง docker-compose exec esp32-dev bash ใช้เข้าไปใน container ที่ชื่อว่า esp32-dev เพื่อใช้งาน environment ภายใน เช่น build โปรแกรม
+
+2.ESP-IDF Tools: เครื่องมือไหนจาก Lab4 ที่จะใช้ในการ build โปรแกรม ESP32?
+ตอบ เครื่องมือที่ใช้ในการ build โปรแกรม ESP32 คือ idf.py ซึ่งเป็นเครื่องมือหลักของ ESP-IDF ที่ใช้ compile, flash, และ monitor โปรแกรมบน ESP32
+
+3.New Tools: เครื่องมือใหม่ที่ติดตั้ง (tree, htop) ใช้ทำอะไร?
+ตอบ เครื่องมือใหม่ที่ติดตั้งคือ tree และ htop tree ใช้ดูโครงสร้างของไฟล์และโฟลเดอร์แบบเป็นลำดับขั้น htop ใช้ดูสถานะการใช้ทรัพยากรของระบบ เช่น CPU, memory, และ process ต่างๆ แบบเรียลไทม์
+
+4.Architecture Focus: การศึกษา ESP32 architecture แตกต่างจากการทำ arithmetic ใน Lab4 อย่างไร?
+ตอบ การศึกษา ESP32 architecture คือการเรียนรู้โครงสร้างภายในของบอร์ด เช่น memory, CPU core, IO และการเชื่อมต่อกับอุปกรณ์ต่างๆ ส่วน Lab4 เป็นการฝึกเขียนโปรแกรมด้วยภาษา C โดยเน้นการคำนวณเลข (arithmetic) และ logic พื้นฐาน
+
+คำถามวิเคราะห์ (ง่าย) 2.1
+1.Memory Types: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
+ตอบ SRAM ใช้เก็บข้อมูลที่เปลี่ยนแปลงได้ระหว่างการทำงานของโปรแกรม เช่น ตัวแปรในฟังก์ชัน, stack, heap
+Flash Memory ใช้เก็บโปรแกรมถาวร เช่น โค้ดที่ compile แล้ว, ไฟล์ firmware, ค่าคงที่ (constant)
+
+2.Address Ranges: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+ตอบ ตัวแปรแต่ละประเภทอยู่ใน address range ต่างกัน เช่น: Global/Static variables → อยู่ใน .data หรือ .bss section (ใน SRAM) 
+Local variables → อยู่ใน stack (SRAM) Dynamic memory (malloc) → อยู่ใน heap (SRAM) Constant/Code → อยู่ใน flash memory
+
+3.Memory Usage: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+ตอบ ESP32 มี memory หลายประเภท เช่น: Flash Memory ประมาณ 4MB (ขึ้นอยู่กับบอร์ด) SRAM (internal) ประมาณ 520KB (แบ่งเป็นหลายส่วน เช่น IRAM, DRAM)
+การใช้งานขึ้นอยู่กับขนาดของโปรแกรมที่ compile แล้ว โดยสามารถดูได้จาก output หลัง build (เช่น ขนาด text/data/bss)
+
+คำถามวิเคราะห์ 3.1
+1.Cache Efficiency: ทำไม sequential access เร็วกว่า random access?
+ตอบ เพราะ cache ทำงานได้ดีเมื่อข้อมูลถูกเข้าถึงอย่างต่อเนื่อง (sequential) — มันโหลดข้อมูลเป็น block (เช่น 32 bytes) ล่วงหน้าไว้ใน cache
+ถ้า access แบบสุ่ม (random), cache จะต้องโหลดข้อมูลใหม่บ่อย ๆ ทำให้ช้ากว่าเพราะเกิด cache miss บ่อย
+
+2.Memory Hierarchy: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
+ตอบ Internal SRAM อยู่ในตัว ESP32 เอง → เร็วมาก, latency ต่ำ, ใช้สำหรับโค้ดและข้อมูลที่เข้าถึงบ่อย External memory (เช่น PSRAM) ต่อผ่าน bus ภายนอก → ช้ากว่า, latency สูง, แต่มีขนาดใหญ่กว่า ใช้เก็บข้อมูลจำนวนมากที่ไม่ต้องเข้าถึงบ่อย
+
+3.Stride Patterns: stride size ส่งผลต่อ performance อย่างไร?
+ตอบ ถ้า stride มีขนาดเล็ก หรือ stride เท่ากับ 1 จะทำให้การเข้าถึงข้อมูลเป็นแบบต่อเนื่อง ซึ่งทำให้ cache สามารถทำงานได้มีประสิทธิภาพ เพราะข้อมูลที่โหลดเข้ามาจะถูกใช้งานต่อเนื่อง ทำให้เร็วขึ้น
+แต่ถ้า stride มีขนาดใหญ่ เช่น ข้ามข้อมูลไปเรื่อย ๆ แบบไม่ต่อเนื่อง จะทำให้ข้อมูลที่โหลดเข้ามาใน cache ไม่ได้ใช้งานจริง และทำให้เกิด cache miss บ่อยขึ้น ส่งผลให้ประสิทธิภาพลดลงและช้าลง
+
+คำถามวิเคราะห์ 4.1
+1.Core Specialization: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด?
+ตอบ จากผลการทดลอง พบว่า Core 0 เหมาะกับงานระบบ เช่นงานที่เกี่ยวข้องกับ Wi-Fi, Bluetooth หรือ interrupt ต่าง ๆ ส่วน Core 1 เหมาะกับงานที่เป็น logic หรือการประมวลผลหลักของโปรแกรม เพราะสามารถใช้รันโค้ดหนัก ๆ ได้โดยไม่รบกวนงานระบบ
+
+2.Communication Overhead: inter-core communication มี overhead เท่าไร?
+ตอบ การสื่อสารระหว่าง cores (inter-core communication) มี overhead อยู่บ้าง เนื่องจากต้องใช้การ synchronize ข้อมูล และอาจเกิด delay ได้ โดยเฉพาะถ้ามีการแชร์ memory หรือใช้ lock ทำให้บางครั้งอาจช้ากว่าการทำงานบน core เดียวกัน
+
+3.Load Balancing: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
+ตอบ การกระจายงานระหว่าง cores จะมีประสิทธิภาพก็ต่อเมื่อออกแบบการทำงานให้เหมาะสม เช่น แยกงานที่หนักไปไว้ที่ Core 1 และปล่อยให้ Core 0 ทำงานระบบอย่างเดียว ถ้ากระจายไม่ดีอาจทำให้ core ใด core หนึ่งทำงานหนักเกินไป ขณะที่อีก core ว่าง
+
+
+
+
