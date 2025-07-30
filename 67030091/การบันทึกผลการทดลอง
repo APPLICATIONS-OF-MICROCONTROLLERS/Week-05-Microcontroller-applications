@@ -25,14 +25,11 @@ DMA capable memory:     303096 bytes
 
 Memory analysis complete!
 
-### คำถามวิเคราะห์ (ง่าย)
-
-1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
-
-
-2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+คำถามวิเคราะห์ (ง่าย)
+Memory Types: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
 
 
-3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+Address Ranges: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
 
----
+
+Memory Usage: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
