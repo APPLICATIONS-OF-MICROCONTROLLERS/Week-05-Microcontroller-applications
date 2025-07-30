@@ -1,0 +1,61 @@
+Table 2.1: Memory Address Analysis
+Memory Section	Variable/Function	   Address (ที่แสดงออกมา)	Memory Type
+Stack	          stack_var	           0x3ffb4550	             SRAM
+Global          SRAM	sram_buffer	   0x3ffb16ac               SRAM
+Flash	          flash_string	       0x3f407b64	             Flash
+Heap	          heap_ptr	           0x3ffb5264               SRAM
+
+Table 2.2: Memory Usage Summary
+Memory Type	    Free Size (bytes)	Total Size (bytes)
+Internal SRAM	  303,096        520,192
+Flash Memory	  _________	        varies
+DMA Memory	    	303,096        varies
+
+Table 3.1: Cache Performance Results
+Test Type	     Memory Type	     Time (μs)        Ratio vs Sequential
+Sequential	  Internal SRAM	      6050	        1.00x
+Random	      Internal SRAM	      8025          1.33x
+Sequential	  External Memory	   27440	        4.54x
+Random	      External Memory	   30667	        1.12x
+
+Table 3.2: Stride Access Performance
+Stride Size	Time (μs)	    Ratio vs Stride 1
+1		        5951	  1.00x
+2           3142	  0.53x
+4	          1471	  0.25x
+8	          807	    0.14x
+16          449     0.08x
+
+Table 4.1: Dual-Core Performance Summary
+Metric	                          Core 0 (PRO_CPU)	  Core 1 (APP_CPU)
+Total Iterations	                100	                150
+Average Time per Iteration (μs)	  96                  9762
+Total Execution Time (ms)         5002                5952
+Task Completion Rate	            100%                100%
+
+Table 4.2: Inter-Core Communication
+Metric	                Value
+Messages Sent	          100
+Messages Received	      100
+Average Latency (μs)	  ~17,000
+Queue Overflow Count	  0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
