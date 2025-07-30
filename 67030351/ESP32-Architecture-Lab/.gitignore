@@ -1,0 +1,19 @@
+# Ignore build folders
+build/
+**/build/
+
+# Ignore ESP-IDF generated files
+*.bin
+*.elf
+*.map
+*.pyc
+*.log
+*.tmp
+*.bak
+*.o
+*.obj
+*.cmake
+CMakeFiles/
+cmake-build-*/
+sdkconfig.old
+.DS_Store
