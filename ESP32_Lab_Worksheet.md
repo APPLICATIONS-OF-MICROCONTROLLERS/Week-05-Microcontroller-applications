@@ -377,14 +377,23 @@ Memory analysis complete!
 | Memory Type | Free Size (bytes) | Total Size (bytes) |
 |-------------|-------------------|--------------------|
 | Internal SRAM | 380096 bytes | 520,192 |
-| Flash Memory | 0 bytes| varies |
+| Flash Memory | 2 MB | varies |
 | DMA Memory | 303096 bytes| varies |
 
 ### คำถามวิเคราะห์ (ง่าย)
 
 1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
+   SRAM ใช้เก็บข้อมูลชั่วคราว มีความเร็วสูง ข้อมูลจะหายเมื่อปิดเครื่อง 	ใช้เก็บ Stack, Heap, ตัวแปรชั่วคราว
+   	Flash Memory ใช้เก็บข้อมูลถาวร ความเร็วต่ำ ใช้เก็บ โปรแกรม, ค่าคงที่, Configuration
 2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+   - Global / Static Variables ประเภท: ตัวแปร global หรือ static Address Range  0x3FFB_0000 ~ 0x3FFC_0000
+   - Stack Variables ประเภท: ตัวแปรภายในฟังก์ชันที่ไม่เป็น static Address Range 0x3FFB_0000 ~ 0x3FFC_0000
+   - Heap Allocated Variables ประเภท: ตัวแปรที่ใช้ผ่าน malloc, calloc, pvPortMalloc Address Range 0x3FFB_0000 ~ 0x3FFE_FFFF หรือ 0x3F80_0000 ~ ถ้าใช้ PSRAM
+   - Read-only Data / Const ประเภท: ฟังก์ชันหรือคำสั่ง (Instruction) Address Range 0x3F40_0000 ~ 0x3F7F_FFFF
+   - Code / Text Section ประเภท: ฟังก์ชันหรือคำสั่ง Address Range 0x4008_0000 ~ 0x400B_FFFF
+   
 3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+    มี memory ทั้งหมด 520192s byte ใช้ไป 380096 bytes
 
 ---
 
