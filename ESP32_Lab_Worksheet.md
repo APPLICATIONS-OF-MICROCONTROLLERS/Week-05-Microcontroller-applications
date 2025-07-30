@@ -405,11 +405,11 @@ Memory analysis complete!
 
 ### คำถามวิเคราะห์ (ง่าย)
 
-1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
+1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน? <br>
 ANS  ข้อมูลที่เปลี่ยนแปลงระหว่างการทำงานของโปรแกรม , ตัวแปรในโปรแกรม
-2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน? <br>
 ANS  IRAM ประเภท .text , DRAM ประเภท .data, .bss , Flash ประเภท .rodata, .text
-3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร? <br>
 ANS  RAM 520 KB , Flash 4 MB
 
 ---
