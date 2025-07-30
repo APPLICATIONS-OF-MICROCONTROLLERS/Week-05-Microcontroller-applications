@@ -1,0 +1,38 @@
+### การบันทึกผลการทดลอง 
+
+**Table 2.1: Memory Address Analysis**
+
+ESP32 Memory Architecture Analysis
+==================================
+Flash string: Hello from Flash Memory!
+SRAM buffer: SRAM Test Data
+
+=== ESP32 Memory Layout Analysis ===
+Stack variable address: 0x3ffb4550
+SRAM buffer address:    0x3ffb16ac
+Flash string address:   0x3f407b64
+Heap allocation:        0x3ffb5264
+
+=== Heap Information ===
+Free heap size:         303096 bytes
+Min free heap size:     303096 bytes
+Largest free block:     172032 bytes
+
+=== Memory Usage by Type ===
+Internal SRAM:          380096 bytes
+SPI RAM (if available): 0 bytes
+DMA capable memory:     303096 bytes
+
+Memory analysis complete!
+
+### คำถามวิเคราะห์ (ง่าย)
+
+1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
+
+
+2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+
+
+3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+
+---
