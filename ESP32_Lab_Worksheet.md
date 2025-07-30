@@ -179,13 +179,23 @@ ESP32-Architecture-Lab/          # โฟลเดอร์หลักของ
 ### คำถามทบทวน
 
 1. **Docker Commands**: คำสั่ง `docker-compose up -d` และ `docker-compose exec esp32-dev bash` ทำอะไร?
+- **Ans**
     -  `docker-compose up -d`
     -   **Ans**:สร้างและรัน container ตาม config ใน docker-compose.yml แบบ เบื้องหลัง (detached)
     -   `docker-compose exec esp32-dev bash`
     -   **Ans**:เข้าสู่ bash(แถบคำสั่ง) ภายใน container ชื่อ esp32-dev เพื่อใช้งานหรือพัฒนา ESP3
 3. **ESP-IDF Tools**: เครื่องมือไหนจาก Lab4 ที่จะใช้ในการ build โปรแกรม ESP32?
-4. **New Tools**: เครื่องมือใหม่ที่ติดตั้ง (tree, htop) ใช้ทำอะไร?
-5. **Architecture Focus**: การศึกษา ESP32 architecture แตกต่างจากการทำ arithmetic ใน Lab4 อย่างไร?
+- **Ans**
+    - `idf.py build` -> ใช้สำหรับ compile source code และ link ไฟล์ต่าง ๆ ให้กลายเป็น binary (.bin) ที่สามารถโหลดลง ESP32 ได้
+    - `idf.py monitor` -> ใช้ ดู log และข้อมูลจาก Serial ของบอร์ด (ใช้สำหรับ debug หรือดูผลลัพธ์)
+
+3. **New Tools**: เครื่องมือใหม่ที่ติดตั้ง (tree, htop) ใช้ทำอะไร?
+- **Ans**
+  - แสดง โครงสร้างไฟล์และโฟลเดอร์ ในรูปแบบต้นไม้
+4. **Architecture Focus**: การศึกษา ESP32 architecture แตกต่างจากการทำ arithmetic ใน Lab4 อย่างไร?
+- **Ans**
+   - การศึกษา ESP32 architecture เน้นความเข้าใจ โครงสร้างภายในของชิป เช่น หน่วยประมวลผล, หน่วยความจำ, และอุปกรณ์ต่อพ่วง
+   - ส่วน Lab4 (Arithmetic) เน้นการฝึกเขียนโปรแกรมพื้นฐาน (เช่น บวก ลบ คูณ หาร) เพื่อเข้าใจ ภาษา C และตรรกะโปรแกรม
 
 ### ผลลัพธ์ที่คาดหวัง
 - [ ] สร้างโฟลเดอร์ ESP32-Architecture-Lab เรียบร้อย
