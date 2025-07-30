@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/project/dual-core-test/build/CMakeFiles/bootloader
+/project/dual-core-test/build/CMakeFiles/bootloader.rule
+/project/dual-core-test/build/CMakeFiles/bootloader-complete.rule
+/project/dual-core-test/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/project/dual-core-test/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/project/dual-core-test/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/project/dual-core-test/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/project/dual-core-test/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/project/dual-core-test/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/project/dual-core-test/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

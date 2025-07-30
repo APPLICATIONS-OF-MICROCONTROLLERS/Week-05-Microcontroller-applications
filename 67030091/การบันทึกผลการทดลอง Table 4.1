@@ -1,0 +1,120 @@
+การบันทึกผลการทดลอง
+Table 4.1: Dual-Core Performance Summary
+
+=====================================
+Creating tasks...
+Core 0 Task Started (PRO_CPU)
+Core 0: Sent message 0
+Tasks created successfully. Monitoring dual-core performance...
+
+Core 1 Task Started (APP_CPU)
+Core 1: Received 'Hello from Core 0 #0' (latency: 3493 μs)
+Core 0: Sent message 10
+Core 1: Received 'Hello from Core 0 #10' (latency: 24361 μs)
+Core 0: Sent message 20
+
+=== Performance Monitor (Second 1) ===
+Core 0 iterations: 21 (avg: 127 μs)
+Core 1 iterations: 25 (avg: 9485 μs)
+Queue messages waiting: 1
+Core 1: Received 'Hello from Core 0 #20' (latency: 4879 μs)
+Free heap: 292612 bytes
+Core 0: Sent message 30
+Core 1: Received 'Hello from Core 0 #30' (latency: 17112 μs)
+Core 0: Sent message 40
+
+=== Performance Monitor (Second 2) ===
+Core 0 iterations: 41 (avg: 123 μs)
+Core 1 iterations: 51 (avg: 9561 μs)
+Queue messages waiting: 1
+Free heap: 292612 bytes
+Core 1: Received 'Hello from Core 0 #40' (latency: 24339 μs)
+Core 0: Sent message 50
+Core 1: Received 'Hello from Core 0 #50' (latency: 2266 μs)
+Core 0: Sent message 60
+
+=== Performance Monitor (Second 3) ===
+Core 0 iterations: 61 (avg: 115 μs)
+Core 1 iterations: 76 (avg: 9631 μs)
+Queue messages waiting: 1
+Free heap: 292612 bytes
+Core 1: Received 'Hello from Core 0 #60' (latency: 13944 μs)
+Core 0: Sent message 70
+Core 1: Received 'Hello from Core 0 #70' (latency: 24033 μs)
+Core 0: Sent message 80
+
+=== Performance Monitor (Second 4) ===
+Core 0 iterations: 81 (avg: 112 μs)
+Core 1 iterations: 101 (avg: 9604 μs)
+Queue messages waiting: 1
+Free heap: 292612 bytes
+Core 1: Received 'Hello from Core 0 #80' (latency: 3457 μs)
+Core 0: Sent message 90
+Core 1: Received 'Hello from Core 0 #90' (latency: 13590 μs)
+Core 0 Task Completed in 4995 ms
+
+=== Performance Monitor (Second 5) ===
+Core 0 iterations: 100 (avg: 97 μs)
+Core 1 iterations: 127 (avg: 9653 μs)
+Queue messages waiting: 0
+Free heap: 292612 bytes
+Core 1 Task Completed in 5936 ms
+
+=== Performance Monitor (Second 6) ===
+Core 0 iterations: 100 (avg: 97 μs)
+Core 1 iterations: 150 (avg: 9711 μs)
+Queue messages waiting: 0
+Free heap: 301524 bytes
+
+=== Performance Monitor (Second 7) ===
+Core 0 iterations: 100 (avg: 97 μs)
+Core 1 iterations: 150 (avg: 9711 μs)
+Queue messages waiting: 0
+Free heap: 301524 bytes
+
+=== Performance Monitor (Second 8) ===
+Core 0 iterations: 100 (avg: 97 μs)
+Core 1 iterations: 150 (avg: 9711 μs)
+Queue messages waiting: 0
+Free heap: 301524 bytes
+
+=== Performance Monitor (Second 9) ===
+Core 0 iterations: 100 (avg: 97 μs)
+Core 1 iterations: 150 (avg: 9711 μs)
+Queue messages waiting: 0
+Free heap: 301524 bytes
+
+=== Performance Monitor (Second 10) ===
+Core 0 iterations: 100 (avg: 97 μs)
+Core 1 iterations: 150 (avg: 9711 μs)
+Queue messages waiting: 0
+Free heap: 301524 bytes
+
+=== Final Results ===
+Core 0 total iterations: 100
+Core 1 total iterations: 150
+Core 0 average time per iteration: 97 μs
+Core 1 average time per iteration: 9711 μs
+
+Dual-core analysis complete!
+I (13875) main_task: Returned from app_main()
+
+
+
+คำถามวิเคราะห์
+1 Core Specialization: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด?
+- Core 0 เหมาะกับงานเบาและเร็ว เช่น การส่งข้อมูล, การควบคุม, task ที่ต้องตอบสนองเร็ว
+→ เพราะมี latency ต่ำและ iteration สม่ำเสมอ
+
+- Core 1 เหมาะกับงานประมวลผลหนัก เช่น การรับข้อมูล, วิเคราะห์ข้อมูล, งานที่ใช้เวลามาก
+→ เพราะสามารถจัดการงานที่ใช้เวลาได้นานโดยไม่กระทบระบบหลัก
+
+
+
+2 Communication Overhead: inter-core communication มี overhead เท่าไร?
+- การสื่อสารระหว่าง Core 0 กับ Core 1 บน ESP32 มี overhead เฉลี่ยประมาณ 9–10 ms ต่อข้อความ
+ซึ่งถือว่า สูงพอสมควร หากต้องการความเร็วในการแลกเปลี่ยนข้อมูลบ่อยๆ จึงควรใช้วิธีสื่อสารที่มีประสิทธิภาพ หรือจำกัดจำนวน message ที่ส่งข้าม core.
+
+3 Load Balancing: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
+- การกระจายงานยังไม่สมดุล เพราะ Core 0 ว่างเร็ว ในขณะที่ Core 1 ยังทำงานหนัก
+แปลว่า load balancing ยังไม่ดีพอ ควรออกแบบให้ทั้งสอง Core ทำงานใกล้เคียงกัน เพื่อใช้ประสิทธิภาพของระบบให้เต็มที่

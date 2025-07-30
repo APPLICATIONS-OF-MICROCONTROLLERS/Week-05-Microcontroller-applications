@@ -1,0 +1,2 @@
+source /project/dual-core-test/build/gdbinit/symbols
+source /project/dual-core-test/build/gdbinit/connect
