@@ -1,0 +1,68 @@
+ESP32 Dual-Core Architecture Analysis Results
+============================================
+
+## การทดลองที่ 4: การศึกษา Dual-Core Architecture
+
+**วันที่ทดลอง**: 30 กรกฎาคม 2025  
+**เครื่องมือ**: ESP32 QEMU Emulator  
+**โปรเจค**: dual_core_test  
+
+---
+
+## 📊 ผลการทดลอง
+
+### Test Configuration
+- **Core 0 (PRO_CPU)**: Protocol processing simulation
+- **Core 1 (APP_CPU)**: Application processing simulation
+- **Inter-core Communication**: Queue-based messaging
+
+### Table 4.1: Dual-Core Performance Summary
+
+| Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
+|--------|-------------------|-------------------|
+| Total Iterations | 100 | 150 |
+| Average Time per Iteration (μs) | 66 | 11376 |
+| Total Execution Time (ms) | 5004 | 6465 |
+| Task Completion Rate | 100% | 100% |
+
+### Table 4.2: Inter-Core Communication
+
+| Metric | Value |
+|--------|-------|
+| Messages Sent | 10 |
+| Messages Received | 10 |
+| Average Latency (μs) | 10800 |
+| Queue Overflow Count | 0 |
+
+---
+
+## 🔍 การวิเคราะห์ผลลัพธ์
+
+### 1. Core Specialization
+- **Core 0 (PRO_CPU)**: เหมาะกับงานระบบเบา, เร็ว (66 μs)
+- **Core 1 (APP_CPU)**: เหมาะกับงานประมวลผลหนัก, ช้า (11376 μs)
+- Core 1 ช้ากว่า Core 0 ถึง 172 เท่า
+
+### 2. Communication Overhead
+- **Average latency**: 10800 μs (10.8 ms)
+- มี overhead สูงหากสื่อสารบ่อยหรือใช้ sync ระหว่าง cores
+- การสื่อสารระหว่าง cores ทำงานได้เสถียร
+
+### 3. Load Balancing
+- **Core 0**: 100 iterations (protocol work)
+- **Core 1**: 150 iterations (application work)
+- ถ้ากระจายงานดี จะช่วยให้ทั้งสอง core ทำงานได้มีประสิทธิภาพสูงสุด
+
+---
+
+## 🎯 สรุปผลการทดลอง
+
+✅ เข้าใจ core specialization ของ ESP32  
+✅ ทดสอบ inter-core communication สำเร็จ  
+✅ วิเคราะห์ load balancing ได้  
+✅ บันทึกผลการทดลองครบถ้วน  
+
+---
+
+*บันทึกเมื่อ: 30 กรกฎาคม 2025*  
+*ESP32 Architecture Lab - Week 5* 

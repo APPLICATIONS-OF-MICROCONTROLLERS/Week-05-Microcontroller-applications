@@ -1,0 +1,79 @@
+Command: /opt/esp/python_env/idf6.0_py3.12_env/bin/python /opt/esp/idf/tools/idf_monitor.py -p socket://localhost:5555 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /project/memory-test/build/memory_test.elf /project/memory-test/build/bootloader/bootloader.elf -m '/opt/esp/python_env/idf6.0_py3.12_env/bin/python' '/opt/esp/idf/tools/idf.py'
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x12 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15928
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (744) boot: ESP-IDF v6.0-dev-1002-gbfe5caf58f 2nd stage bootloader[0m
+[0;32mI (745) boot: compile time Jul 30 2025 08:15:46[0m
+[0;32mI (745) boot: Multicore bootloader[0m
+[0;32mI (835) boot: chip revision: v3.0[0m
+[0;32mI (838) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (838) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (838) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (855) boot: Enabling RNG early entropy source...[0m
+[0;32mI (871) boot: Partition Table:[0m
+[0;32mI (871) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (871) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (872) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (872) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (883) boot: End of partition table[0m
+[0;32mI (971) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=09644h ( 38468) map[0m
+[0;32mI (1014) esp_image: segment 1: paddr=0001966c vaddr=3ff80000 size=00024h (    36) load[0m
+[0;32mI (1052) esp_image: segment 2: paddr=00019698 vaddr=3ffb0000 size=029e0h ( 10720) load[0m
+[0;32mI (1092) esp_image: segment 3: paddr=0001c080 vaddr=40080000 size=03f98h ( 16280) load[0m
+[0;32mI (1133) esp_image: segment 4: paddr=00020020 vaddr=400d0020 size=0f0c4h ( 61636) map[0m
+[0;32mI (1176) esp_image: segment 5: paddr=0002f0ec vaddr=40083f98 size=09020h ( 36896) load[0m
+[0;32mI (1284) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (1284) boot: Disabling RNG early entropy source...[0m
+[0;32mI (1309) cpu_start: Multicore app[0m
+[0;32mI (2282) cpu_start: Pro cpu start user code[0m
+[0;32mI (2283) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (2283) app_init: Application information:[0m
+[0;32mI (2283) app_init: Project name:     memory_test[0m
+[0;32mI (2284) app_init: App version:      1[0m
+[0;32mI (2284) app_init: Compile time:     Jul 30 2025 08:15:42[0m
+[0;32mI (2284) app_init: ELF file SHA256:  b0991b745...[0m
+[0;32mI (2284) app_init: ESP-IDF:          v6.0-dev-1002-gbfe5caf58f[0m
+[0;32mI (2284) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (2284) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (2284) efuse_init: Chip rev:         v3.0[0m
+[0;32mI (2285) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (2286) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (2286) heap_init: At 3FFB32A8 len 0002CD58 (179 KiB): DRAM[0m
+[0;32mI (2286) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (2286) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (2287) heap_init: At 4008CFB8 len 00013048 (76 KiB): IRAM[0m
+[0;32mI (2328) spi_flash: detected chip: winbond[0m
+[0;32mI (2338) spi_flash: flash io: dio[0m
+[0;32mI (2352) main_task: Started on CPU0[0m
+[0;32mI (2362) main_task: Calling app_main()[0m
+=== ESP32 STARTING UP ===
+ESP32 Memory Architecture Analysis
+==================================
+Flash string: Hello from Flash Memory!
+SRAM buffer: SRAM Test Data
+
+=== ESP32 Memory Layout Analysis ===
+Stack variable address: 0x3ffb4550
+SRAM buffer address:    0x3ffb16ac
+Flash string address:   0x3f407b64
+Heap allocation:        0x3ffb5264
+
+=== Heap Information ===
+Free heap size:         303096 bytes
+Min free heap size:     303096 bytes
+Largest free block:     172032 bytes
+
+=== Memory Usage by Type ===
+Internal SRAM:          380096 bytes
+SPI RAM (if available): 0 bytes
+DMA capable memory:     303096 bytes
+
+Memory analysis complete!
+[0;32mI (2462) main_task: Returned from app_main()[0m
