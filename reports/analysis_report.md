@@ -17,11 +17,11 @@ Checklist การทดลอง:
 
 คะแนนประเมิน:
 การเตรียม Environment และ Continuity (15 คะแนน): 15
-Memory Analysis (30 คะแนน): 30
-Cache Performance (25 คะแนน): 23
-Dual-Core Analysis (25 คะแนน): 25
+Memory Analysis (30 คะแนน): 25
+Cache Performance (25 คะแนน): 20
+Dual-Core Analysis (25 คะแนน): 20
 รายงานและการเปรียบเทียบ (5 คะแนน): 5
-รวม (100 คะแนน): 98
+รวม (100 คะแนน): 85
 
 
 คำถามเพิ่มเติม:
