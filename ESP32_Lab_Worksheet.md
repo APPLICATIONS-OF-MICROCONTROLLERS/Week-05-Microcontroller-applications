@@ -411,8 +411,14 @@ Memory analysis complete!
   - Flash: เก็บโปรแกรม, ข้อมูลคงที่ (const), ไฟล์
 2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
 - **Ans**
-  - Flash: 0x3f40xxxx → โค้ด, string คงที่
-  - SRAM: 0x3ffbxxxx → Stack, heap, global
+| ประเภทข้อมูล                | ตัวอย่าง Address Range               | อธิบาย                                                |
+| --------------------------- | ------------------------------------ | ----------------------------------------------------- |
+| **Flash (ROM)**             | `0x3f40_0000` – `0x3f7f_ffff`        | โค้ดโปรแกรม + string คงที่ (`const char*`)            |
+| **Data (SRAM, .data/.bss)** | `0x3ffb_0000` – `0x3ffd_ffff`        | ตัวแปร global/static ที่เปลี่ยนค่าได้                 |
+| **Heap (malloc/new)**       | `0x3ffb_xxxx` – `0x3ffd_xxxx`        | ขึ้นอยู่กับขนาด heap ที่เหลือ                         |
+| **Stack**                   | `0x3ffb_4xxx`, `0x3ffb_5xxx` เป็นต้น | ตัวแปรในฟังก์ชัน (local)                              |
+| **PSRAM (ถ้ามี)**           | `0x3f80_0000` ขึ้นไป                 | หน่วยความจำเพิ่มพิเศษ (เช่น 4MB) สำหรับเก็บข้อมูลใหญ่ |
+
 4. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
 - **Ans**
   - SRAM ทั้งหมด: ~380,096 bytes (≈ 371 KB)
