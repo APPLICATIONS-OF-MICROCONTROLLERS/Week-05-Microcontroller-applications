@@ -582,26 +582,30 @@ void app_main() {
 
 | Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
 |-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Sequential | Internal SRAM | 5187 | 1.00x |
+| Random | Internal SRAM | 7938 | 1.53x |
+| Sequential | External Memory | 5057 | 0.97x |
+| Random | External Memory | 8195 | 1.62x |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
 |-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| 1 | 5523 | 1.00x |
+| 2 | 2709 | 0.49x |
+| 4 | 1487 | 0.27x |
+| 8 | 663 | 0.12x |
+| 16 | 838 | 0.15x |
 
 ### คำถามวิเคราะห์
 
 1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
+   cache ทำงานดีที่สุดกับsequential มันสามารถโหลดข้อมูลหลายๆ ตัวในครั้งเดียวผ่าน cache line ถ้าใช้ random จะต้องโหลดบ่อย ทำให้เกิด miss เยอะ
 2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
+   - Internal SRAM เร็วกว่าเพราะอยู่ใกล้ CPU และมี cache
+   - External memory (PSRAM) ช้ากว่าเพราะต้องผ่าน bus เพิ่ม และอาจไม่มี cache
 3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+   ยิ่ง stride ใหญ่ Cache efficiency จะดีขึ้นแต่ ถ้าใหญ่เกินไป จะข้าม cache line จน cache miss บ่อยขึ้น
 
 ---
 
