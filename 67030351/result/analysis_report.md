@@ -3,7 +3,8 @@
 - สร้าง environment ด้วย Docker และ ESP-IDF สำเร็จ
 - ใช้ Docker image เดิมจาก Lab 4 ทำให้ setup ง่ายและรวดเร็ว
 - ติดตั้งเครื่องมือพื้นฐานสำหรับวิเคราะห์ เช่น tree, htop
-### ✅ ผลลัพธ์: ระบบพร้อมสำหรับการทดลองทั้งหมด
+### ✅ ผลลัพธ์: 
+- ระบบพร้อมสำหรับการทดลองทั้งหมด
 ## 2. Memory Architecture Analysis
 - ทดสอบและวิเคราะห์ตำแหน่งของหน่วยความจำ (stack, heap, flash, SRAM)
 - ใช้คำสั่ง xtensa-esp32-elf-objdump และ xtensa-esp32-elf-size เพื่อดู memory sections
