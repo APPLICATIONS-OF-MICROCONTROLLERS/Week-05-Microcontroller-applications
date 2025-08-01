@@ -39,11 +39,11 @@
 ### คำถามวิเคราะห์ (ง่าย)
 
 1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
-   ans   1.SRAM: เก็บตัวแปรชั่วคราว เช่น local, global, heap
-         2. Flash: เก็บโปรแกรม, ข้อมูลคงที่ (const), ไฟล์
+     - SRAM: เก็บตัวแปรชั่วคราว เช่น local, global, heap
+   - Flash: เก็บโปรแกรม, ข้อมูลคงที่ (const), ไฟล์
    
 3. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
-   ans
+   
    |ประเภทข้อมูล	|ตัวอย่าง Address Range |	อธิบาย|
    |------|------|
    |Flash (ROM)|	0x3f40_0000 – 0x3f7f_ffff	|โค้ดโปรแกรม + string คงที่ (const char*) |
@@ -52,7 +52,7 @@
    |Stack |	0x3ffb_4xxx, 0x3ffb_5xxx เป็นต้น |	ตัวแปรในฟังก์ชัน (local)|
    |PSRAM (ถ้ามี)	| 0x3f80_0000 ขึ้นไป|	หน่วยความจำเพิ่มพิเศษ (เช่น 4MB) สำหรับเก็บข้อมูลใหญ่ |
 5. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
- -SRAM ทั้งหมด: ~380,096 bytes (≈ 371 KB)
--Heap ว่าง: 303,096 bytes
--Flash: ไม่ระบุขนาด, โดยทั่วไป = 2–4 MB
+ - SRAM ทั้งหมด: ~380,096 bytes (≈ 371 KB)
+- Heap ว่าง: 303,096 bytes
+- Flash: ไม่ระบุขนาด, โดยทั่วไป = 2–4 MB
 
