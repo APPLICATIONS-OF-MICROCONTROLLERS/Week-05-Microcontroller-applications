@@ -400,7 +400,7 @@ Memory analysis complete!
 | Memory Type | Free Size (bytes) | Total Size (bytes) |
 |-------------|-------------------|--------------------|
 | Internal SRAM | 380096 | 520,192 |
-| Flash Memory | 0 | varies |
+| Flash Memory | 2 | varies |
 | DMA Memory | 303096 | varies |
 
 ### คำถามวิเคราะห์ (ง่าย)
@@ -599,26 +599,29 @@ void app_main() {
 
 | Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
 |-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Sequential | Internal SRAM | 23014 | 1.00x |
+| Random | Internal SRAM | 19884 | 0.86x |
+| Sequential | External Memory | 53845 | 1.31x |
+| Random | External Memory | 70427 | 1.31x |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
 |-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| 1 | 17606 | 1.00x |
+| 2 | 14765 | 0.84x |
+| 4 | 3122 | 0.18x |
+| 8 | 11299 | 0.64x |
+| 16 | 860 | 0.05x |
 
 ### คำถามวิเคราะห์
 
-1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
-2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
-3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access? <br>
+ANS  เพราะสามารถใช้ cache และ prefetch ได้อย่างมีประสิทธิภาพ ทำให้ข้อมูลถูกโหลดล่วงหน้าได้
+2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร? <br>
+ANS  Internal SRAM เร็วกว่าแต่มีขนาดน้อย, ส่วน External Memory ช้ากว่าแต่เก็บข้อมูลได้มากกว่า
+3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร? <br>
+ANS  Stride size เล็กจะ cache จะทำงานได้ดีและเร็วกว่า Stride size ใหญ่ cache จะทำงานได้ไม่เต็มที่
 
 ---
 
