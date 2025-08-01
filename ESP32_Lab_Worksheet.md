@@ -389,19 +389,19 @@ Memory analysis complete!
 **Table 2.1: Memory Address Analysis**
 
 | Memory Section | Variable/Function | Address (ที่แสดงออกมา) | Memory Type |
-|----------------|-------------------|----------------------|-------------|
-| Stack | stack_var | 0x_______ | SRAM |
-| Global SRAM | sram_buffer | 0x_______ | SRAM |
-| Flash | flash_string | 0x_______ | Flash |
-| Heap | heap_ptr | 0x_______ | SRAM |
+|----------------|-------------------|------------------------|-------------|
+| Stack          | stack_var         | 0x3ffb4550             | SRAM        |
+| Global SRAM    | sram_buffer       | 0x3ffb16ac             | SRAM        |
+| Flash          | flash_string      | 0x3f407b8c             | Flash       |
+| Heap           | heap_ptr          | 0x3ffb5264             | SRAM        |
 
 **Table 2.2: Memory Usage Summary**
 
-| Memory Type | Free Size (bytes) | Total Size (bytes) |
-|-------------|-------------------|--------------------|
-| Internal SRAM | _________ | 520,192 |
-| Flash Memory | _________ | varies |
-| DMA Memory | _________ | varies |
+| Memory Type     | Free Size (bytes) | Total Size (bytes) |
+|-----------------|-------------------|--------------------|
+| Internal SRAM   | 380096            | 520,192            |
+| Flash Memory    | -                 | varies             |
+| DMA Memory      | 303096            | varies             |
 
 ### คำถามวิเคราะห์ (ง่าย)
 
@@ -594,22 +594,22 @@ void app_main() {
 
 **Table 3.1: Cache Performance Results**
 
-| Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
-|-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Test Type   | Memory Type      | Time (μs) | Ratio vs Sequential |
+|-------------|------------------|-----------|--------------------|
+| Sequential  | Internal SRAM    | 6658      | 1.00x              |
+| Random      | Internal SRAM    | 7279      | 1.09x              |
+| Sequential  | External Memory  | 25525     | 3.83x              |
+| Random      | External Memory  | 27826     | 4.18x              |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
 |-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| 1           | 6892      | 1.00x            |
+| 2           | 3308      | 0.48x            |
+| 4           | 2069      | 0.30x            |
+| 8           | 892       | 0.13x            |
+| 16          | 461       | 0.07x            |
 
 ### คำถามวิเคราะห์
 
@@ -840,21 +840,21 @@ void app_main() {
 
 **Table 4.1: Dual-Core Performance Summary**
 
-| Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
-|--------|-------------------|-------------------|
-| Total Iterations | _______ | _______ |
-| Average Time per Iteration (μs) | _______ | _______ |
-| Total Execution Time (ms) | _______ | _______ |
-| Task Completion Rate | _______ | _______ |
+| Metric                        | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
+|-------------------------------|------------------|------------------|
+| Total Iterations              | 100              | 150              |
+| Average Time per Iteration (μs)| 44               | 9660             |
+| Total Execution Time (ms)     | 4998             | 5941             |
+| Task Completion Rate          | 100%             | 100%             |
 
 **Table 4.2: Inter-Core Communication**
 
-| Metric | Value |
-|--------|-------|
-| Messages Sent | _______ |
-| Messages Received | _______ |
-| Average Latency (μs) | _______ |
-| Queue Overflow Count | _______ |
+| Metric              | Value |
+|---------------------|-------|
+| Messages Sent       | 10    |
+| Messages Received   | 10    |
+| Average Latency (μs)| ~13,000 (โดยประมาณจาก log) |
+| Queue Overflow Count| 0     |
 
 ### คำถามวิเคราะห์
 
