@@ -366,20 +366,20 @@ Flash string: Hello from Flash Memory!
 SRAM buffer: SRAM Test Data
 
 === ESP32 Memory Layout Analysis ===
-Stack variable address: 0x3ffbxxxx
-SRAM buffer address:    0x3ffcxxxx  
-Flash string address:   0x400xxxxx
-Heap allocation:        0x3ffcxxxx
+Stack variable address: 0x3ffb4550
+SRAM buffer address:    0x3ffb16ac  
+Flash string address:   0x3f407b64
+Heap allocation:        0x3ffb5264
 
 === Heap Information ===
-Free heap size:         xxxxxx bytes
-Min free heap size:     xxxxxx bytes
-Largest free block:     xxxxxx bytes
+Free heap size:         303096 bytes
+Min free heap size:     303096 bytes
+Largest free block:     172032 bytes
 
 === Memory Usage by Type ===
-Internal SRAM:          xxxxxx bytes
+Internal SRAM:          380096 bytes
 SPI RAM (if available): 0 bytes
-DMA capable memory:     xxxxxx bytes
+DMA capable memory:     303096 bytes
 
 Memory analysis complete!
 ```
@@ -390,24 +390,27 @@ Memory analysis complete!
 
 | Memory Section | Variable/Function | Address (ที่แสดงออกมา) | Memory Type |
 |----------------|-------------------|----------------------|-------------|
-| Stack | stack_var | 0x_______ | SRAM |
-| Global SRAM | sram_buffer | 0x_______ | SRAM |
-| Flash | flash_string | 0x_______ | Flash |
-| Heap | heap_ptr | 0x_______ | SRAM |
+| Stack | stack_var | 0x3ffb4550 | SRAM |
+| Global SRAM | sram_buffer | 0x3ffb16ac | SRAM |
+| Flash | flash_string | 0x3f407b64 | Flash |
+| Heap | heap_ptr | 0x3ffb5264 | SRAM |
 
 **Table 2.2: Memory Usage Summary**
 
 | Memory Type | Free Size (bytes) | Total Size (bytes) |
 |-------------|-------------------|--------------------|
-| Internal SRAM | _________ | 520,192 |
-| Flash Memory | _________ | varies |
-| DMA Memory | _________ | varies |
+| Internal SRAM | 380096 | 520,192 |
+| Flash Memory | 2 | varies |
+| DMA Memory | 303096 | varies |
 
 ### คำถามวิเคราะห์ (ง่าย)
 
-1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
-2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
-3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน? <br>
+ANS  ข้อมูลที่เปลี่ยนแปลงระหว่างการทำงานของโปรแกรม , ตัวแปรในโปรแกรม
+2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน? <br>
+ANS  IRAM ประเภท .text , DRAM ประเภท .data, .bss , Flash ประเภท .rodata, .text
+3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร? <br>
+ANS  RAM 520 KB , Flash 4 MB
 
 ---
 
@@ -596,26 +599,29 @@ void app_main() {
 
 | Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
 |-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Sequential | Internal SRAM | 23014 | 1.00x |
+| Random | Internal SRAM | 19884 | 0.86x |
+| Sequential | External Memory | 53845 | 1.31x |
+| Random | External Memory | 70427 | 1.31x |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
 |-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| 1 | 17606 | 1.00x |
+| 2 | 14765 | 0.84x |
+| 4 | 3122 | 0.18x |
+| 8 | 11299 | 0.64x |
+| 16 | 860 | 0.05x |
 
 ### คำถามวิเคราะห์
 
-1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
-2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
-3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access? <br>
+ANS  เพราะสามารถใช้ cache และ prefetch ได้อย่างมีประสิทธิภาพ ทำให้ข้อมูลถูกโหลดล่วงหน้าได้
+2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร? <br>
+ANS  Internal SRAM เร็วกว่าแต่มีขนาดน้อย, ส่วน External Memory ช้ากว่าแต่เก็บข้อมูลได้มากกว่า
+3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร? <br>
+ANS  Stride size เล็กจะ cache จะทำงานได้ดีและเร็วกว่า Stride size ใหญ่ cache จะทำงานได้ไม่เต็มที่
 
 ---
 
@@ -842,25 +848,28 @@ void app_main() {
 
 | Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
 |--------|-------------------|-------------------|
-| Total Iterations | _______ | _______ |
-| Average Time per Iteration (μs) | _______ | _______ |
-| Total Execution Time (ms) | _______ | _______ |
-| Task Completion Rate | _______ | _______ |
+| Total Iterations | 100 | 150 |
+| Average Time per Iteration (μs) | 96 | 9894 |
+| Total Execution Time (ms) | 	~4996 | 	~5967 |
+| Task Completion Rate | 100% | 100% |
 
 **Table 4.2: Inter-Core Communication**
 
 | Metric | Value |
 |--------|-------|
-| Messages Sent | _______ |
-| Messages Received | _______ |
-| Average Latency (μs) | _______ |
-| Queue Overflow Count | _______ |
+| Messages Sent | 10 |
+| Messages Received | 10 |
+| Average Latency (μs) | ~14,023 |
+| Queue Overflow Count | 	0 |
 
 ### คำถามวิเคราะห์
 
-1. **Core Specialization**: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด?
-2. **Communication Overhead**: inter-core communication มี overhead เท่าไร?
-3. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
+1. **Core Specialization**: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด? <br>
+ANS Core 0 เหมาะกับงานที่ต้องการความเร็ซรอบสูง Core 1 เหมาะกับงานที่ใช้การคำนวณที่ซับซ้อน
+2. **Communication Overhead**: inter-core communication มี overhead เท่าไร? <br>
+ANS  13 ms
+3. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่? <br>
+ANS  ไม่มีประสิทธิภาพ core 1 ทำงานหหนักกว่า core 0 อย่าเห็นได้ชัด
 
 ---
 
