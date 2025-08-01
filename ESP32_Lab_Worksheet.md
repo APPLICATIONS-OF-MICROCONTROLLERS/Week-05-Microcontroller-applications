@@ -848,25 +848,28 @@ void app_main() {
 
 | Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
 |--------|-------------------|-------------------|
-| Total Iterations | _______ | _______ |
-| Average Time per Iteration (μs) | _______ | _______ |
-| Total Execution Time (ms) | _______ | _______ |
-| Task Completion Rate | _______ | _______ |
+| Total Iterations | 100 | 150 |
+| Average Time per Iteration (μs) | 96 | 9894 |
+| Total Execution Time (ms) | 	~4996 | 	~5967 |
+| Task Completion Rate | 100% | 100% |
 
 **Table 4.2: Inter-Core Communication**
 
 | Metric | Value |
 |--------|-------|
-| Messages Sent | _______ |
-| Messages Received | _______ |
-| Average Latency (μs) | _______ |
-| Queue Overflow Count | _______ |
+| Messages Sent | 10 |
+| Messages Received | 10 |
+| Average Latency (μs) | ~14,023 |
+| Queue Overflow Count | 	0 |
 
 ### คำถามวิเคราะห์
 
-1. **Core Specialization**: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด?
-2. **Communication Overhead**: inter-core communication มี overhead เท่าไร?
-3. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
+1. **Core Specialization**: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด? <br>
+ANS Core 0 เหมาะกับงานที่ต้องการความเร็ซรอบสูง Core 1 เหมาะกับงานที่ใช้การคำนวณที่ซับซ้อน
+2. **Communication Overhead**: inter-core communication มี overhead เท่าไร? <br>
+ANS  13 ms
+3. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่? <br>
+ANS  ไม่มีประสิทธิภาพ core 1 ทำงานหหนักกว่า core 0 อย่าเห็นได้ชัด
 
 ---
 
