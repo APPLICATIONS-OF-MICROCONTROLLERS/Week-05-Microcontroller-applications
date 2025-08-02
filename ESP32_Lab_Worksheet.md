@@ -400,7 +400,7 @@ Memory analysis complete!
 | Memory Type | Free Size (bytes) | Total Size (bytes) |
 |-------------|-------------------|--------------------|
 | Internal SRAM | 380096 | 520,192 |
-| Flash Memory |0| varies |
+| Flash Memory |2 MB| varies |
 | DMA Memory | 303096 | varies |
 
 ### คำถามวิเคราะห์ (ง่าย)
@@ -596,26 +596,32 @@ void app_main() {
 
 | Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
 |-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Sequential | Internal SRAM | 	8891 | 1.00x |
+| Random | Internal SRAM | 11679 | 1.31x |
+| Sequential | External Memory | 11679 | 1.00x |
+| Random | External Memory | 35829 | 1.10x |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
 |-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| 1 | 10411 | 1.00x |
+| 2 | 4586 | 0.44x |
+| 4 | 2373 | 0.23x |
+| 8 | 1229 | 0.12x |
+| 16 | 843 | 0.08x |
 
 ### คำถามวิเคราะห์
 
 1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
+  Sequential access เร็วกว่า เพราะ CPU สามารถดึงข้อมูลล่วงหน้า (prefetch) และใช้ cache ได้เต็มที่
+  Random access ช้ากว่า เพราะตำแหน่งกระโดด ทำให้ cache ทำงานไม่ทัน เกิด cache miss บ่อย
 2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
-3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+  Internal SRAM: อยู่ในชิป = เร็ว, latency ต่ำ, bandwidth สูง
+  External Memory (PSRAM): อยู่นอกชิป = ช้าเพราะต้องส่งผ่าน bus ภายนอก
+4. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+  Stride เล็ก (1, 2)  อ่านข้อมูลต่อเนื่องใน cache = เร็ว
+  Stride ใหญ่ (8, 16)  กระโดดข้าม cache line  cache miss มากขึ้น = ช้า 
 
 ---
 
