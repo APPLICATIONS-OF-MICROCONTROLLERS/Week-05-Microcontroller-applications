@@ -383,7 +383,7 @@ Memory analysis complete!
 ### คำถามวิเคราะห์ (ง่าย)
 
 1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
-   SRAM ใช้เก็บข้อมูลชั่วคราว มีความเร็วสูง ข้อมูลจะหายเมื่อปิดเครื่อง 	ใช้เก็บ Stack, Heap, ตัวแปรชั่วคราว
+    SRAM ใช้เก็บข้อมูลชั่วคราว มีความเร็วสูง ข้อมูลจะหายเมื่อปิดเครื่อง 	ใช้เก็บ Stack, Heap, ตัวแปรชั่วคราว
    	Flash Memory ใช้เก็บข้อมูลถาวร ความเร็วต่ำ ใช้เก็บ โปรแกรม, ค่าคงที่, Configuration
 2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
    - Global / Static Variables ประเภท: ตัวแปร global หรือ static Address Range  0x3FFB_0000 ~ 0x3FFC_0000
@@ -600,11 +600,11 @@ void app_main() {
 ### คำถามวิเคราะห์
 
 1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
-   cache ทำงานดีที่สุดกับsequential มันสามารถโหลดข้อมูลหลายๆ ตัวในครั้งเดียวผ่าน cache line ถ้าใช้ random จะต้องโหลดบ่อย ทำให้เกิด miss เยอะ
-2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
+    cache ทำงานดีที่สุดกับsequential มันสามารถโหลดข้อมูลหลายๆ ตัวในครั้งเดียวผ่าน cache line ถ้าใช้ random จะต้องโหลดบ่อย ทำให้เกิด miss เยอะ
+3. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
    - Internal SRAM เร็วกว่าเพราะอยู่ใกล้ CPU และมี cache
    - External memory (PSRAM) ช้ากว่าเพราะต้องผ่าน bus เพิ่ม และอาจไม่มี cache
-3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+4. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
    ยิ่ง stride ใหญ่ Cache efficiency จะดีขึ้นแต่ ถ้าใหญ่เกินไป จะข้าม cache line จน cache miss บ่อยขึ้น
 
 ---
