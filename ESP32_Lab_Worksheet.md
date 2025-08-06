@@ -602,20 +602,20 @@ void app_main() {
 
 | Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
 |-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Sequential | Internal SRAM | 5076 μs | 1.00x |
+| Random | Internal SRAM | 5829 μs	 | 1.15x |
+| Sequential | External Memory | 15992 μs	 | 1.00x |
+| Random | External Memory | 18314 μs	 | 1.15x |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
 |-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| 1 | 4805 μs	 | 1.00x |
+| 2 | 2296 μs	 | 0.48x |
+| 4 | 1231 μs	 | 0.26x |
+| 8 | 567 μs   | 0.12x |
+| 16 | 307 μs	 | 0.06x |
 
 ### คำถามวิเคราะห์
 
@@ -848,19 +848,19 @@ void app_main() {
 
 | Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
 |--------|-------------------|-------------------|
-| Total Iterations | _______ | _______ |
-| Average Time per Iteration (μs) | _______ | _______ |
-| Total Execution Time (ms) | _______ | _______ |
-| Task Completion Rate | _______ | _______ |
+| Total Iterations | 100	 | 150 |
+| Average Time per Iteration (μs) | 51 | 9677 |
+| Total Execution Time (ms) | 4992 | 5944 |
+| Task Completion Rate | 100%	 | 100% |
 
 **Table 4.2: Inter-Core Communication**
 
 | Metric | Value |
 |--------|-------|
-| Messages Sent | _______ |
-| Messages Received | _______ |
-| Average Latency (μs) | _______ |
-| Queue Overflow Count | _______ |
+| Messages Sent | 10 |
+| Messages Received | 10 |
+| Average Latency (μs) | ~14,042 |
+| Queue Overflow Count | 0 |
 
 ### คำถามวิเคราะห์
 
@@ -880,9 +880,9 @@ void app_main() {
 ### แบบฟอร์มส่งงาน
 
 **ข้อมูลนักศึกษา:**
-- ชื่อ: _________________________________
-- รหัสนักศึกษา: _______________________
-- วันที่ทำการทดลอง: ___________________
+- ชื่อ: วิศวะ กำจร
+- รหัสนักศึกษา: 67030215
+- วันที่ทำการทดลอง: 4/8/68
 
 **Checklist การทดลอง:**
 - [ ] Environment setup สำเร็จ (ต่อเนื่องจากสัปดาห์ที่ 4)
@@ -901,13 +901,13 @@ void app_main() {
 
 **คำถามเพิ่มเติม:**
 1. เปรียบเทียบประสบการณ์การใช้ Docker ในสัปดาห์นี้กับสัปดาห์ที่ 4:
-   _________________________________________________
+   แลปนี้มีการเพิ่มเติมเกี่ยวตัวไฟล์.cและดูผลลัพธ์เพิ่ม
 
 2. สิ่งที่เรียนรู้เพิ่มเติมเกี่ยวกับ ESP32 architecture:
-   _________________________________________________
+   ได้เรียนรู้ว่า ESP32 เป็นไมโครคอนโทรลเลอร์ที่มี dual-core (Tensilica Xtensa LX6) พร้อมความสามารถในการประมวลผลแบบ real-time, รองรับ Wi-Fi และ Bluetooth ในตัว, มี peripheral       ต่างๆ มากมาย เช่น ADC, DAC, SPI, I2C, UART รวมถึงการจัดการพลังงานที่ยืดหยุ่น นอกจากนี้ยังได้เข้าใจโครงสร้างของ memory map และความสำคัญของ FreeRTOS ที่ทำงานอยู่เบื้องหลังระบบ
 
 3. ความท้าทายที่พบในการทำ architecture analysis:
-   _________________________________________________
+   ต้องทำความเข้าใจการทำงานของ Dual-Core Scheduling และการแบ่ง task อย่างเหมาะสมเพื่อหลีกเลี่ยง bottleneck
 
 ---
 
