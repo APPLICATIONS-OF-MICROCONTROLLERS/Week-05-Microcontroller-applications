@@ -1,0 +1,57 @@
+================================
+Array size: 4096 elements (16 KB)
+Iterations per test: 100
+Test runs: 5
+
+Initializing test arrays...
+PSRAM not available, using internal memory
+
+=== Test 1: Sequential vs Random Access (Internal SRAM) ===
+SRAM Sequential Access: 4059 μs (sum=3609780224)
+SRAM Random Access: 4613 μs (sum=3609780224)
+SRAM Performance Ratio (Random/Sequential): 1.14x
+
+=== Test 2: External Memory Access ===
+External Sequential Access: 3965 μs (sum=3609780224)
+External Random Access: 4566 μs (sum=3609780224)
+External Memory Performance Ratio: 1.15x
+
+Memory Type Comparison (Sequential Access):
+External/Internal Speed Ratio: 0.98x
+
+=== Test 3: Stride Access Patterns ===
+Stride 1 (stride 1): 3990 μs (sum=3609780224)
+Stride 2 (stride 2): 2016 μs (sum=1801306112)
+Stride 4 (stride 4): 992 μs (sum=3044552704)
+Stride 8 (stride 8): 507 μs (sum=3666176000)
+Stride 16 (stride 16): 243 μs (sum=1829504000)
+
+Stride Analysis:
+Stride 2/1 ratio: 0.51x
+Stride 4/1 ratio: 0.25x
+Stride 8/1 ratio: 0.13x
+Stride 16/1 ratio: 0.06x
+
+Cache performance analysis complete!
+I (1953) main_task: Returned from app_main()
+
+
+
+คำถามวิเคราะห์
+1 Cache Efficiency: ทำไม sequential access เร็วกว่า random access?
+- Sequential access เร็วกว่า random access เพราะ เข้ากับการทำงานของ cache memory ดังนี้:
+
+เมื่อ CPU อ่านข้อมูลจาก memory แบบต่อเนื่อง (sequential), cache จะโหลดข้อมูลเป็นชุด (cache line) ล่วงหน้า
+ดังนั้นข้อมูลถัดไปที่ต้องใช้อยู่ใน cache แล้ว → ไม่ต้องรอโหลดจากหน่วยความจำหลัก → เร็วกว่า
+แต่ถ้าเป็น random access, CPU ต้องกระโดดไปอ่านตำแหน่งที่ห่างกัน → cache ไม่สามารถทำนายล่วงหน้าได้ → ต้องโหลดใหม่บ่อยครั้ง → ช้าลง
+
+
+2 Memory Hierarchy: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
+- Internal SRAM คือหน่วยความจำภายในชิป ESP32 มีความเร็วสูง เพราะเชื่อมต่อโดยตรงกับ CPU ใช้เก็บข้อมูลชั่วคราว เช่น stack, heap และตัวแปรที่ใช้งานระหว่างรันโปรแกรม ส่วน External memory 
+เช่น SPI RAM หรือ Flash ภายนอก จะเชื่อมต่อผ่านบัสภายนอก ความเร็วต่ำกว่า ใช้เก็บข้อมูลขนาดใหญ่หรือนำมาเพิ่มความจุให้กับระบบ หน่วยความจำภายนอกมักใช้เก็บข้อมูลที่ไม่จำเป็นต้องเข้าถึงบ่อย
+หรือไม่ต้องการความเร็วสูงเหมือน Internal SRAM.
+
+
+3 Stride Patterns: stride size ส่งผลต่อ performance อย่างไร?
+- Stride size คือระยะห่างของข้อมูลแต่ละตำแหน่งที่โปรแกรมอ่านจากหน่วยความจำ เช่น อ่านทุกช่อง (stride = 1), ทุก 2 ช่อง (stride = 2), หรือทุก 8 ช่อง (stride = 8)
+เมื่อ stride size มีค่าต่ำ (เช่น 1 หรือ 2) การเข้าถึงข้อมูลจะต่อเนื่องกัน ทำให้ cache memory โหลดข้อมูลล่วงหน้าได้และประสิทธิภาพจะสูง แต่ถ้า stride size สูง (เช่น 8, 16 หรือมากกว่านั้น) โปรแกรมจะกระโดดไปอ่านข้อมูลห่างๆ กัน ทำให้ cache เดาทิศทางไม่ถูก ข้อมูลจึงไม่อยู่ใน cache ต้องโหลดจากหน่วยความจำหลักบ่อยๆ ทำให้ performance ลดลง

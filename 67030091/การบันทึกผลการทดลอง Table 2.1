@@ -1,0 +1,48 @@
+### การบันทึกผลการทดลอง 
+
+**Table 2.1: Memory Address Analysis**
+
+ESP32 Memory Architecture Analysis
+==================================
+Flash string: Hello from Flash Memory!
+SRAM buffer: SRAM Test Data
+
+=== ESP32 Memory Layout Analysis ===
+Stack variable address: 0x3ffb4550
+SRAM buffer address:    0x3ffb16ac
+Flash string address:   0x3f407b64
+Heap allocation:        0x3ffb5264
+
+=== Heap Information ===
+Free heap size:         303096 bytes
+Min free heap size:     303096 bytes
+Largest free block:     172032 bytes
+
+=== Memory Usage by Type ===
+Internal SRAM:          380096 bytes
+SPI RAM (if available): 0 bytes
+DMA capable memory:     303096 bytes
+
+Memory analysis complete!
+
+คำถามวิเคราะห์ (ง่าย)
+1 Memory Types: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
+- SRAM ใช้เก็บข้อมูลชั่วคราวขณะโปรแกรมกำลังทำงาน (เช่น ตัวแปรและ stack) ส่วน Flash Memory ใช้เก็บข้อมูลถาวร เช่น โค้ดโปรแกรมและค่าคงที่ (constants).
+
+
+
+2 Address Ranges: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+- ตัวแปรแต่ละประเภทใน ESP32 อยู่ใน address range ดังนี้:
+
+Global / Static variables → อยู่ใน DRAM (Data RAM) หรือ .data/.bss segment → เช่น 0x3FFBxxxx
+
+Local variables (ในฟังก์ชัน) → อยู่ใน stack → เช่น 0x3FFBxxxx (ส่วนหนึ่งของ DRAM)
+
+Dynamic variables (malloc, calloc) → อยู่ใน heap → เช่น 0x3FFBxxxx หรือ 0x3FFAExxx
+
+Code / Constants → อยู่ใน Flash memory → เช่น 0x400Dxxxx (สำหรับโค้ด) และ 0x3F400000 (สำหรับข้อมูลคงที่)
+
+
+
+3 Memory Usage: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+- ESP32 มี SRAM ประมาณ 520 KB, ขณะนี้ใช้ไป 380 KB, และ heap ยังว่างเต็มที่ (~303 KB) ส่วน Flash ใช้เก็บโปรแกรมและ string ถาวร แต่ไม่ได้ระบุจำนวนที่ใช้ในผลลัพธ์นี้.

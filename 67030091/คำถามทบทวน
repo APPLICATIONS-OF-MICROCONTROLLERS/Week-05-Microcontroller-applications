@@ -1,0 +1,17 @@
+Docker Commands: คำสั่ง docker-compose up -d และ docker-compose exec esp32-dev bash ทำอะไร?
+- `docker-compose up -d` คือคำสั่งที่ใช้รัน container ตามที่กำหนดในไฟล์ `docker-compose.yml` แบบเบื้องหลัง ส่วน `docker-compose exec esp32-dev bash` 
+ใช้เข้าไปใน container ชื่อ `esp32-dev` เพื่อใช้งาน bash shell ข้างใน เช่น สั่ง build หรือทดสอบโค้ด.
+
+
+ESP-IDF Tools: เครื่องมือไหนจาก Lab4 ที่จะใช้ในการ build โปรแกรม ESP32?
+- เครื่องมือจาก Lab4 ที่ใช้ในการ build โปรแกรม ESP32 คือ `idf.py` โดยเฉพาะคำสั่ง `idf.py build` ซึ่งจะทำหน้าที่ compile โค้ดและสร้างไฟล์สำหรับโหลดลง ESP32.
+
+
+New Tools: เครื่องมือใหม่ที่ติดตั้ง (tree, htop) ใช้ทำอะไร?
+- `tree` ใช้แสดงโครงสร้างโฟลเดอร์และไฟล์เป็นรูปแบบต้นไม้ ส่วน `htop` ใช้ดูการทำงานของระบบ เช่น CPU, RAM และ process ต่าง ๆ แบบ real-time.
+
+
+Architecture Focus: การศึกษา ESP32 architecture แตกต่างจากการทำ arithmetic ใน Lab4 อย่างไร?
+- การศึกษา ESP32 architecture เน้นที่การเข้าใจโครงสร้างภายในของชิป เช่น การทำงานของ core, memory, interrupt, และ peripheral ต่าง ๆ 
+ขณะที่ Lab4 เน้นการคำนวณทางคณิตศาสตร์ (arithmetic) เช่น การใช้ตัวแปรและฟังก์ชันทางคณิตศาสตร์ ซึ่งไม่เจาะลึกถึงโครงสร้างหรือการทำงานภายในของ ESP32.
+
