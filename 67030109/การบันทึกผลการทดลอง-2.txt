@@ -1,0 +1,56 @@
+ผลลัพธ์การรัน
+
+=== ESP32 STARTING UP ===
+ESP32 Memory Architecture Analysis
+==================================
+Flash string: Hello from Flash Memory!
+SRAM buffer: SRAM Test Data
+
+=== ESP32 Memory Layout Analysis ===
+Stack variable address: 0x3ffb4550
+SRAM buffer address:    0x3ffb16ac
+Flash string address:   0x3f407d24
+Heap allocation:        0x3ffb526c
+
+=== Heap Information ===
+Free heap size:         303088 bytes
+Min free heap size:     303088 bytes
+Largest free block:     172032 bytes
+
+=== Memory Usage by Type ===
+Internal SRAM:          380136 bytes
+SPI RAM (if available): 0 bytes
+DMA capable memory:     303088 bytes
+
+Memory analysis complete!
+
+
+Table 2.1: Memory Address Analysis
+| Memory Section | Variable/Function | Address (ที่แสดงออกมา) | Memory Type |
+| -------------- | ----------------- | ---------------------- | ----------- |
+| Stack          | stack\_var        | 0x3ffb4550             | SRAM        |
+| Global SRAM    | sram\_buffer      | 0x3ffb16ac             | SRAM        |
+| Flash          | flash\_string     | 0x3f407d24             | Flash       |
+| Heap           | heap\_ptr         | 0x3ffb526c             | SRAM        |
+
+Table 2.2: Memory Usage Summary
+| Memory Type   | Free Size (bytes) | Total Size (bytes) |
+| ------------- | ----------------- | ------------------ |
+| Internal SRAM | 303,088           | 520,192            |
+| Flash Memory  | varies            | varies             |
+| DMA Memory    | 303,088           | varies             |
+
+
+คำถามทบทวน
+1.Memory Types: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
+    SRAM เก็บตัวแปรที่เปลี่ยนได้ (stack, global, heap) หายเมื่อปิดเครื่อง
+    Flash เก็บโปรแกรม, ข้อมูลคงที่, filesystem ไม่หายเมื่อปิดเครื่อง
+
+2.Address Ranges: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+    Flash: 0x3F40xxxx → ข้อมูลคงที่ / โค้ด
+    SRAM: 0x3FFBxxxx → global, heap, stack
+    RTC SRAM: 0x5000xxxx → อยู่ได้แม้ deep sleep
+    
+3.Memory Usage: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+    SRAM: ~520 KB (ใช้ได้จริง ~300 KB)
+    Flash: ทั่วไป 4 MB (บางรุ่นมากกว่า)
