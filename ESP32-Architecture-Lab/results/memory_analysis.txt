@@ -1,0 +1,23 @@
+=== ESP32 STARTING UP ===
+ESP32 Memory Architecture Analysis
+==================================
+Flash string: Hello from Flash Memory!
+SRAM buffer: SRAM Test Data
+
+=== ESP32 Memory Layout Analysis ===
+Stack variable address: 0x3ffb4550
+SRAM buffer address:    0x3ffb16ac
+Flash string address:   0x3f407d24
+Heap allocation:        0x3ffb526c
+
+=== Heap Information ===
+Free heap size:         303088 bytes
+Min free heap size:     303088 bytes
+Largest free block:     172032 bytes
+
+=== Memory Usage by Type ===
+Internal SRAM:          380136 bytes
+SPI RAM (if available): 0 bytes
+DMA capable memory:     303088 bytes
+
+Memory analysis complete!
