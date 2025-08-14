@@ -1,0 +1,14 @@
+Command: /opt/esp/python_env/idf6.0_py3.12_env/bin/python /opt/esp/idf/tools/idf_monitor.py -p socket://localhost:5555 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /project/cache-test/build/cache_test.elf /project/cache-test/build/bootloader/bootloader.elf -m '/opt/esp/python_env/idf6.0_py3.12_env/bin/python' '/opt/esp/idf/tools/idf.py'
+Stride 2 (stride 2): 4364 μs (sum=1801306112)
+Stride 4 (stride 4): 3078 μs (sum=3044552704)
+Stride 8 (stride 8): 1587 μs (sum=3666176000)
+Stride 16 (stride 16): 679 μs (sum=1829504000)
+
+Stride Analysis:
+Stride 2/1 ratio: 0.33x
+Stride 4/1 ratio: 0.24x
+Stride 8/1 ratio: 0.12x
+Stride 16/1 ratio: 0.05x
+
+Cache performance analysis complete!
+[0;32mI (14754) main_task: Returned from app_main()[0m
