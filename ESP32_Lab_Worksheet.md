@@ -390,25 +390,29 @@ Memory analysis complete!
 
 | Memory Section | Variable/Function | Address (ที่แสดงออกมา) | Memory Type |
 |----------------|-------------------|----------------------|-------------|
-| Stack | stack_var | 0x_______ | SRAM |
-| Global SRAM | sram_buffer | 0x_______ | SRAM |
-| Flash | flash_string | 0x_______ | Flash |
-| Heap | heap_ptr | 0x_______ | SRAM |
+| Stack | stack_var | 0x3ffb4550 | SRAM |
+| Global SRAM | sram_buffer | 0x3ffb16ac | SRAM |
+| Flash | flash_string | 0x3f407b64 | Flash |
+| Heap | heap_ptr | 0x3ffb5264 | SRAM |
 
 **Table 2.2: Memory Usage Summary**
 
 | Memory Type | Free Size (bytes) | Total Size (bytes) |
 |-------------|-------------------|--------------------|
-| Internal SRAM | _________ | 520,192 |
-| Flash Memory | _________ | varies |
-| DMA Memory | _________ | varies |
+| Internal SRAM | 380096 bytes | 520,192 |
+| Flash Memory | 0 bytes | varies |
+| DMA Memory | 303096 bytes | varies |
 
 ### คำถามวิเคราะห์ (ง่าย)
 
 1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
-2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
-3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
-
+  - SRAM → เก็บ Stack, Heap, Global var (ข้อมูล runtime)
+  - Flash → เก็บโปรแกรม, ข้อมูลถาวร, constant data
+3. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
+  - SRAM → 0x3FFBxxxx
+  - Flash → 0x3F40xxxx
+4. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+  - SRAM ~520 KB (เหลือใช้งาน ~380 KB) และ Flash ปกติ 4–16 MB
 ---
 
 ## 🔬 การทดลองที่ 3: การศึกษา Cache Performance
@@ -594,28 +598,32 @@ void app_main() {
 
 **Table 3.1: Cache Performance Results**
 
-| Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
-|-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Test Type  | Memory Type     | Time (μs) | Ratio vs Sequential |
+| ---------- | --------------- | --------- | ------------------- |
+| Sequential | Internal SRAM   | **5943**  | **1.00x**           |
+| Random     | Internal SRAM   | **6087**  | **1.02x**           |
+| Sequential | External Memory | **22480** | **1.00x**           |
+| Random     | External Memory | **24076** | **1.07x**           |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
-|-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| ----------- | --------- | ----------------- |
+| 1           | **6329**  | **1.00x**         |
+| 2           | **3179**  | **0.50x**         |
+| 4           | **1440**  | **0.23x**         |
+| 8           | **722**   | **0.11x**         |
+| 16          | **361**   | **0.06x**         |
+
 
 ### คำถามวิเคราะห์
 
 1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
-2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
-3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+  - Sequential access เร็วกว่า random เพราะ cache prefetch ทำงานได้ดี
+3. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
+  - Internal SRAM เร็วกว่า external memory ~3–4 เท่า เพราะ latency/bandwidth ต่างกัน
+4. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+  - Stride size ที่ใหญ่ขึ้น → แตะข้อมูลน้อยลง → เวลาเฉลี่ยลดลง แต่ถ้า normalize access เท่ากันจะเห็นว่า stride ใหญ่ทำให้ locality แย่ลง → performance per access ลดลง
 
 ---
 
@@ -840,28 +848,34 @@ void app_main() {
 
 **Table 4.1: Dual-Core Performance Summary**
 
-| Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
-|--------|-------------------|-------------------|
-| Total Iterations | _______ | _______ |
-| Average Time per Iteration (μs) | _______ | _______ |
-| Total Execution Time (ms) | _______ | _______ |
-| Task Completion Rate | _______ | _______ |
+| Metric                          | Core 0 (PRO\_CPU) | Core 1 (APP\_CPU) |
+| ------------------------------- | ----------------- | ----------------- |
+| Total Iterations                | **100**           | **150**           |
+| Average Time per Iteration (μs) | **62**            | **9715**          |
+| Total Execution Time (ms)       | **5002**          | **5944**          |
+| Task Completion Rate            | **\~20.0 iter/s** | **\~25.2 iter/s** |
 
 **Table 4.2: Inter-Core Communication**
 
-| Metric | Value |
-|--------|-------|
-| Messages Sent | _______ |
-| Messages Received | _______ |
-| Average Latency (μs) | _______ |
-| Queue Overflow Count | _______ |
+| Metric               | Value     |
+| -------------------- | --------- |
+| Messages Sent        | **10**    |
+| Messages Received    | **10**    |
+| Average Latency (μs) | **14608** |
+| Queue Overflow Count | **0**     |
+
 
 ### คำถามวิเคราะห์
 
 1. **Core Specialization**: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด?
-2. **Communication Overhead**: inter-core communication มี overhead เท่าไร?
-3. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
-
+  - Core 0 → งานเบา/ควบคุม, ตอบสนองไว
+  - Core 1 → งานคำนวณหนัก
+3. **Communication Overhead**: inter-core communication มี overhead เท่าไร?
+  - ค่า latency เฉลี่ย ~14.6 ms
+  - แต่จริง ๆ IPC overhead เล็กมาก (<1 ms) ที่เหลือคือ Core 1 ติดงานคำนวณ
+4. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
+  - ไม่สมดุล → Core 1 เป็นคอขวด
+  - ควรแบ่งงานให้ Core 0 มาช่วยหรือหั่นงาน Core 1 ให้เล็กลง
 ---
 
 ## 📊 การวิเคราะห์และสรุปผล
