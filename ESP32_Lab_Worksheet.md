@@ -598,28 +598,32 @@ void app_main() {
 
 **Table 3.1: Cache Performance Results**
 
-| Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
-|-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Test Type  | Memory Type     | Time (μs) | Ratio vs Sequential |
+| ---------- | --------------- | --------- | ------------------- |
+| Sequential | Internal SRAM   | **5943**  | **1.00x**           |
+| Random     | Internal SRAM   | **6087**  | **1.02x**           |
+| Sequential | External Memory | **22480** | **1.00x**           |
+| Random     | External Memory | **24076** | **1.07x**           |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
-|-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| ----------- | --------- | ----------------- |
+| 1           | **6329**  | **1.00x**         |
+| 2           | **3179**  | **0.50x**         |
+| 4           | **1440**  | **0.23x**         |
+| 8           | **722**   | **0.11x**         |
+| 16          | **361**   | **0.06x**         |
+
 
 ### คำถามวิเคราะห์
 
 1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
-2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
-3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+  - Sequential access เร็วกว่า random เพราะ cache prefetch ทำงานได้ดี
+3. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
+  - Internal SRAM เร็วกว่า external memory ~3–4 เท่า เพราะ latency/bandwidth ต่างกัน
+4. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+  - Stride size ที่ใหญ่ขึ้น → แตะข้อมูลน้อยลง → เวลาเฉลี่ยลดลง แต่ถ้า normalize access เท่ากันจะเห็นว่า stride ใหญ่ทำให้ locality แย่ลง → performance per access ลดลง
 
 ---
 
