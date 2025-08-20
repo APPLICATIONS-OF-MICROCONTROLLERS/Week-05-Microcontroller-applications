@@ -19,8 +19,11 @@
 | 8 | 816 μs | 0.14x |
 | 16 | 415 μs | 0.07x |
 
-### คำถามวิเคราะห์
+# คำถามวิเคราะห์
 
-1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
-2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
-3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+### 1. Cache Efficiency : ทำไม sequential access เร็วกว่า random access?
+    Sequential access เร็วกว่า random access เพราะ cache จะดึงข้อมูลที่อยู่ติดกันเข้ามาเก็บไว้ล่วงหน้า (prefetching) ทำให้ไม่ต้องไปดึงจากหน่วยความจำหลักบ่อยๆ
+### 2. Memory Hierarchy : ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
+    Internal SRAM อยู่ภายในชิปและมีความเร็วสูงมาก ส่วน External Memory อยู่ภายนอกชิปและมีความเร็วต่ำกว่ามากแต่มีขนาดใหญ่กว่า
+### 3. Stride Patterns : stride size ส่งผลต่อ performance อย่างไร?
+    เมื่อ stride size เพิ่มขึ้น ประสิทธิภาพในการเข้าถึงข้อมูลจะ เร็วขึ้น อย่างมาก เนื่องจาก CPU สามารถดึงข้อมูลได้เป็นชุดใหญ่ในครั้งเดียว
