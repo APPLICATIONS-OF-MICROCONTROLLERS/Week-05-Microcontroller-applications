@@ -3,6 +3,7 @@ build/
 sdkconfig.old
 .vscode/
 .devcontainer/
+CMakeFiles/
 
 # CMake build files
 CMakeCache.txt
