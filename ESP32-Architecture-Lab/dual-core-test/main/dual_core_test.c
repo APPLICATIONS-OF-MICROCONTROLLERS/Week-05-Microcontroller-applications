@@ -6,6 +6,7 @@
 #include <freertos/semphr.h>
 #include <esp_system.h>
 #include <esp_timer.h>
+#include <math.h>  // Added for the sqrt() function
 
 // Inter-core communication
 static QueueHandle_t core_queue;
@@ -94,7 +95,7 @@ void core1_task(void *parameter) {
         if(xQueueReceive(core_queue, &received_message, pdMS_TO_TICKS(10)) == pdTRUE) {
             uint64_t latency = esp_timer_get_time() - received_message.timestamp;
             safe_printf("Core 1: Received '%s' (latency: %llu μs)\n", 
-                       received_message.data, latency);
+                        received_message.data, latency);
         }
         
         core1_counter++;
@@ -118,9 +119,9 @@ void monitor_task(void *parameter) {
         
         safe_printf("\n=== Performance Monitor (Second %d) ===\n", i + 1);
         safe_printf("Core 0 iterations: %lu (avg: %llu μs)\n", 
-                   core0_counter, core0_counter > 0 ? core0_total_time / core0_counter : 0);
+                    core0_counter, core0_counter > 0 ? core0_total_time / core0_counter : 0);
         safe_printf("Core 1 iterations: %lu (avg: %llu μs)\n", 
-                   core1_counter, core1_counter > 0 ? core1_total_time / core1_counter : 0);
+                    core1_counter, core1_counter > 0 ? core1_total_time / core1_counter : 0);
         safe_printf("Queue messages waiting: %d\n", uxQueueMessagesWaiting(core_queue));
         safe_printf("Free heap: %d bytes\n", esp_get_free_heap_size());
     }
@@ -187,9 +188,9 @@ void app_main() {
     printf("Core 0 total iterations: %lu\n", core0_counter);
     printf("Core 1 total iterations: %lu\n", core1_counter);
     printf("Core 0 average time per iteration: %llu μs\n", 
-           core0_counter > 0 ? core0_total_time / core0_counter : 0);
+            core0_counter > 0 ? core0_total_time / core0_counter : 0);
     printf("Core 1 average time per iteration: %llu μs\n", 
-           core1_counter > 0 ? core1_total_time / core1_counter : 0);
+            core1_counter > 0 ? core1_total_time / core1_counter : 0);
     
     printf("\nDual-core analysis complete!\n");
 }
