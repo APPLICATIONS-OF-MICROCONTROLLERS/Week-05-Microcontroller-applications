@@ -1,51 +1,37 @@
-# ใบงานทดลอง: การศึกษาสถาปัตยกรรม ESP32
-## คำถามทบทวน
-    1.Docker Commands: คำสั่ง docker-compose up -d และ docker-compose exec esp32-dev bash ทำอะไร?
-        `docker-compose up -d`
-         สั่งให้ Docker Compose สร้างและรัน container ทั้งหมดที่นิยามไว้ในไฟล์ docker-compose.yml แบบ detached mode 
-        `docker-compose exec esp32-dev bash`
-        สั่งเข้าไปทำงานใน container ที่ชื่อ esp32-dev โดยเปิด shell bash ข้างในนั้น เหมือนเรา “เข้าไปนั่งทำงานในเครื่อง ESP32 dev environment”
+### แบบฟอร์มส่งงาน
 
-    2.ESP-IDF Tools: เครื่องมือไหนจาก Lab4 ที่จะใช้ในการ build โปรแกรม ESP32?
-        เครื่องมือหลักที่ใช้ build โปรแกรม ESP32 ได้แก่:
-            `idf.py build` → คอมไพล์โค้ดและสร้างไฟล์ binary
-            `idf.py flash` → อัปโหลดโปรแกรมไปยังบอร์ด ESP32
-            `idf.py monitor` → เปิด serial monitor ดูการทำงานของบอร์ด
-            Compiler (เช่น `xtensa-esp32-elf-gcc`) → ตัวแปลโค้ด C ไปเป็น binary
+**ข้อมูลนักศึกษา:**
+- ชื่อ: น.ส.นัจญมา จันทร์ชู
+- รหัสนักศึกษา:67030110
 
-    3.New Tools: เครื่องมือใหม่ที่ติดตั้ง (tree, htop) ใช้ทำอะไร?
-        tree
-            แสดงโครงสร้างไฟล์และโฟลเดอร์เป็นรูปต้นไม้ มองเห็นโครงสร้างโปรเจกต์ได้ง่าย
-        htop
-            โปรแกรม monitor ระบบ ดูว่า CPU, RAM, process อะไรใช้งานอยู่ (แบบ realtime)
-    4.Architecture Focus: การศึกษา ESP32 architecture แตกต่างจากการทำ arithmetic ใน Lab4 อย่างไร?
-        Lab4 (Arithmetic) → เน้นการคำนวณและเขียนโปรแกรมพื้นฐาน เช่น บวก ลบ คูณ หาร (focus อยู่ที่ logic และการคำนวณ)
-        Lab5 (Architecture) → เน้นการศึกษา โครงสร้างภายในของ ESP32 เช่น CPU cores, memory, task scheduling, peripherals, การสื่อสารระหว่างส่วนต่างๆ ของสถาปัตยกรรม ซึ่งลึกกว่าการทำ arithmetic เพราะเกี่ยวข้องกับ การจัดการทรัพยากรของระบบจริง
+**Checklist การทดลอง:**
+- [ ] Environment setup สำเร็จ (ต่อเนื่องจากสัปดาห์ที่ 4)
+- [ ] Memory architecture analysis เสร็จสมบูรณ์
+- [ ] Cache performance testing เสร็จสมบูรณ์
+- [ ] Dual-core analysis เสร็จสมบูรณ์
+- [ ] รายงานผลการทดลองครบถ้วน
 
-### การบันทึกผลการทดลอง 
+**คะแนนประเมิน:**
+- การเตรียม Environment และ Continuity (15 คะแนน): _______
+- Memory Analysis (30 คะแนน): _______
+- Cache Performance (25 คะแนน): _______
+- Dual-Core Analysis (25 คะแนน): _______
+- รายงานและการเปรียบเทียบ (5 คะแนน): _______
+- **รวม (100 คะแนน): _______**
 
-**Table 2.1: Memory Address Analysis**
+**คำถามเพิ่มเติม:**
+1. เปรียบเทียบประสบการณ์การใช้ Docker ในสัปดาห์นี้กับสัปดาห์ที่ 4:
+   - docker-compose up -d สร้าง container จาก image รันอยู่เบื้องหลัง ไม่แสดง log บนหน้าจอ
+   - docker-compose exec esp32-dev bash 	เปิด bash shell เข้าไปทำงานใน container esp32-dev
 
-| Memory Section | Variable/Function | Address (ที่แสดงออกมา) | Memory Type |
-|----------------|-------------------|----------------------|-------------|
-| Stack | stack_var | 0x3ffb4550 | SRAM |
-| Global SRAM | sram_buffer | 0x3ffb16ac | SRAM |
-| Flash | flash_string | 0x3f407b64 | Flash |
-| Heap | heap_ptr | 0x3ffb5264 | SRAM |
+2. สิ่งที่เรียนรู้เพิ่มเติมเกี่ยวกับ ESP32 architecture:
+   - ESP32 มี SRAM + Flash แยกหน้าที่ชัดเจน (SRAM = ตัวแปร/การทำงาน, Flash = เก็บโปรแกรมถาวร)
+   - มีหลาย address space เช่น Data RAM, IRAM, Flash mapping, RTC memory
+   - สามารถวิเคราะห์ Memory usage ด้วย idf.py size เพื่อดูว่าโปรแกรมใช้พื้นที่ไปเท่าไร
 
-**Table 2.2: Memory Usage Summary**
-
-| Memory Type | Free Size (bytes) | Total Size (bytes) |
-|-------------|-------------------|--------------------|
-| Internal SRAM | 380096 bytes | 520,192 |
-| Flash Memory | 2 MB | varies |
-| DMA Memory | 303096 bytes | varies |
-
-### คำถามวิเคราะห์ (ง่าย)
-
-1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
-2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
-3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
-
+3. ความท้าทายที่พบในการทำ architecture analysis:
+   - ปัญหา CMake / idf.py build error (เช่น CMakeLists.txt ไม่ครบ)
+   - การเข้าใจ address range ของตัวแปรแต่ละประเภท
+   - ต้องแยกแยะว่า memory ที่ใช้จริง (SRAM/Flash) ไม่ตรงกับขนาดทั้งหมดที่มี
+   - การตั้งค่า Docker environment ให้ เรียกใช้ idf.py ได้ถูกต้อง
 ---
-
