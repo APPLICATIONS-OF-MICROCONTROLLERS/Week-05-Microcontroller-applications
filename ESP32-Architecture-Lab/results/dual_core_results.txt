@@ -1,0 +1,25 @@
+=== ESP32 Dual-Core Architecture Analysis ===
+
+Creating tasks...
+Core 0 Task Started (PRO_CPU)
+Core 0: Sent message 0
+Tasks created successfully. Monitoring dual-core performance...
+
+Core 1 Task Started (APP_CPU)
+Core 1: Received 'Hello from Core 0 #0' (latency: 8305 μs)
+Core 0: Sent message 10
+Core 1: Received 'Hello from Core 0 #10' (latency: 25223 μs)
+...
+=== Performance Monitor (Second 1) ===
+Core 0 iterations: 21 (avg: 90 μs)
+Core 1 iterations: 25 (avg: 9642 μs)
+Queue messages waiting: 1
+Free heap: 292612 bytes
+...
+=== Final Results ===
+Core 0 total iterations: 100
+Core 1 total iterations: 150
+Core 0 average time per iteration: 44 μs
+Core 1 average time per iteration: 9660 μs
+
+Dual-core analysis complete!
