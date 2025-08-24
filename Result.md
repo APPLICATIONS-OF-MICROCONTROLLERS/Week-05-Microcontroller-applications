@@ -131,24 +131,36 @@
 
 | Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
 |--------|-------------------|-------------------|
-| Total Iterations | _______ | _______ |
-| Average Time per Iteration (μs) | _______ | _______ |
-| Total Execution Time (ms) | _______ | _______ |
-| Task Completion Rate | _______ | _______ |
+| Total Iterations | 100 | 150 |
+| Average Time per Iteration (μs) | 74 | 9691 |
+| Total Execution Time (ms) | 5002 ms | 5944 ms |
+| Task Completion Rate | 100% | 100% |
 
 **Table 4.2: Inter-Core Communication**
 
 | Metric | Value |
 |--------|-------|
-| Messages Sent | _______ |
-| Messages Received | _______ |
-| Average Latency (μs) | _______ |
-| Queue Overflow Count | _______ |
+| Messages Sent | 10 |
+| Messages Received | 10 |
+| Average Latency (μs) | 16108 μs |
+| Queue Overflow Count | 0 |
+
+<img width="1016" height="950" alt="image" src="https://github.com/user-attachments/assets/3debde19-2e03-4aff-86b8-b74067cac876" />
+<img width="723" height="679" alt="image" src="https://github.com/user-attachments/assets/d5870b19-4ca1-4317-83cf-d9817097d1d9" />
+<img width="651" height="401" alt="image" src="https://github.com/user-attachments/assets/54671f14-60fb-44d1-993a-cc2a6fcc654c" />
 
 ### คำถามวิเคราะห์
 
 1. **Core Specialization**: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด?
-2. **Communication Overhead**: inter-core communication มี overhead เท่าไร?
-3. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
+
+   ตอบ :
+   - core 0 เหมาะสำหรับงานที่ต้องจัดการกับ การสื่อสารแบบเรียลไทม์ เช่น Wi-Fi และ Bluetooth ซึ่งเป็นโปรโตคอลหลักของ ESP32 งานประเภทนี้ต้องการความเสถียรและเวลาที่แม่นยำเพื่อป้องกันการขาดการเชื่อมต่อ
+   - core 1 เหมาะสำหรับงาน ประมวลผลหลัก หรือ แอปพลิเคชัน (Application) ที่เราเขียนขึ้น เช่น การประมวลผลข้อมูลเซ็นเซอร์, การคำนวณทางคณิตศาสตร์, หรือการจัดการกับ user interface 
+3. **Communication Overhead**: inter-core communication มี overhead เท่าไร?
+
+   ตอบ : ประมาณ 12 ms
+5. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
+
+   ตอบ : การกระจายงานระหว่าง coresมีประสิทธิภาพสูง  เพราะมีการกระจายงานในทั้ง 2 core
 
 ---
